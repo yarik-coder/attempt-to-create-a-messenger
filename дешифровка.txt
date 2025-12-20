@@ -1,0 +1,13 @@
+import rsa
+from stegano import lsb
+
+# 1. Извлекаем строку из картинки
+extracted_data = lsb.reveal("result_with_key.png")
+
+# 2. Превращаем строку обратно в объект ключа
+# rsa.PrivateKey.load_pkcs1() принимает байты
+recovered_privkey = rsa.PrivateKey.load_pkcs1(extracted_data.encode('utf-8'))
+
+# Теперь ключ можно использовать для дешифровки:
+# message = rsa.decrypt(crypto_blob, recovered_privkey)
+print("Объект ключа успешно восстановлен!")
